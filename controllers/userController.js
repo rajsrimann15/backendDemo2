@@ -40,16 +40,20 @@ const registerUser = asyncHandler(async (req, res) => {
     return;
   }
 
-  const medicalDocuments = req.files['medicalDocuments'];
+  var medicalDocuments = req.files['medicalDocuments'];
     
-  const contactProfiles = req.files['contactProfiles'];
+  var contactProfiles = req.files['contactProfiles'];
   
-  const userProfile = req.files['userProfile'];
+  var userProfile = req.files['userProfile'];
+
+  req.body.medicalDocuments = JSON.parse(req.body.medicalDocuments);
+  req.body.contacts = JSON.parse(req.body.contacts);
 
   if (medicalDocuments) {
       var medicalDocumentsCounter = 0;
       medicalDocuments.forEach(file => {
           req.body.medicalDocuments[medicalDocumentsCounter].reportBinary = Buffer.from(file.buffer).toString('base64');
+          medicalDocumentsCounter++;
       });
   }
 
@@ -57,6 +61,7 @@ const registerUser = asyncHandler(async (req, res) => {
     var contactProfilesCounter = 0;
       contactProfiles.forEach(file => {
         req.body.contacts[contactProfilesCounter].imageBinary = Buffer.from(file.buffer).toString('base64');
+        contactProfilesCounter++;
       });
   }
 
@@ -64,7 +69,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (userProfile && userProfile.length > 0) {
     userProfileImageBinary = Buffer.from(userProfile[0].buffer).toString('base64')
-    console.log('User Profile:', userProfile[0].originalname);
+    // console.log('User Profile:', userProfile[0].originalname);
   }
 
   // Hash password
@@ -89,12 +94,14 @@ const registerUser = asyncHandler(async (req, res) => {
     tabCount: 0
   });
 
+  console.log(`user bro ${user}`);
+
   if (user) {
     console.log(`User created ${user}`);
     const accessToken = jwt.sign(
       { userId: user._id, email: user.email }, 'raj@123', { expiresIn: '1d' }
     );
-    res.status(201).json({ userId: user.id, email: user.email , token: accessToken});
+    res.status(201).json({ userId: user.id, token: accessToken});
   } else {
     console.log("User data is not valid");
     res.status(400).json({message: "error creating the user"});
