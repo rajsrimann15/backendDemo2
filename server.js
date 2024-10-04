@@ -1,22 +1,19 @@
 const express = require("express");
 const connectDb = require("./config/dbConnection");
 const errorHandler = require("./middleware/errorHandler");
-require('./controllers/authController');
 
 connectDb();
 const app = express();
 
-const port = 5001;
+const port = 5000;
 
 app.use(express.json());
-app.use("/orders/packingAndMoving", require("./routes/PackingAndMovingRoutes"));
-app.use("/orders/longDistanceMoving", require("./routes/LongDistanceMovingRoutes"));
-app.use("/orders/localDistanceMoving", require("./routes/LocalDistanceMovingRoutes"));
-app.use("/admin", require("./routes/adminRoutes"));
-app.use(errorHandler);
-app.use('/', require("./routes/authRoutes"));
-
+app.use("/chips", require("./routes/chipRoutes"));
+app.use("/medDetails", require("./routes/medDetailsRoutes"));
+app.use("/doctors", require("./routes/doctorRoutes"));
+app.use("/users", require("./routes/userRoutes"));
+// app.use(errorHandler);
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+    console.log(`Server running on port ${port}`);
+  });

@@ -1,0 +1,64 @@
+{
+    "name": "string",
+    "age": "int",
+    "dateOfBirth": "dateTime",
+    "bloodGroup": "string",
+    "profession": "string",
+    "email": "string",
+    "phone": "string",
+    "address": "string",
+    "bio": "string",
+    "image": "string",
+    "googleId": "string or null",
+
+    "contacts": [
+        {
+            "name": "string",
+            "phone": "string",
+            "imageBinary": "string",
+            "impact": "integer",
+            "viewAccess": "boolean",
+            "relation": "string"
+        }
+    ],
+
+    "medicalInfo": {
+        "issues": [
+            {
+                "issue": "string",
+                "regarding": "string",
+                "description/note": "string"
+            }
+        ],
+        
+        "reports": [
+            {
+                "reportTitle": "string",
+                "reportBinary": "file",
+                "regarding": "string",
+                "uploadedOn": "timestamp",
+                "totalReads": "int",
+                "totalDownloads": "int",
+                "viewAccess": [
+                    {"userId" : "string"}
+                ]
+            }
+        ]
+    },
+
+    "consultedDoctors": [
+        {
+            "name": "string",
+            "phone": "string",
+            "regarding": "string"
+        }
+    ],
+
+    "ownedClothes": [
+        { "chipId": "string" }
+    ],
+
+    "viewAccess": [
+        { "userId": "string" }
+    ]
+}
