@@ -13,6 +13,10 @@ const UserModelSchema = mongoose.Schema({
         type: String,
         required: [true, 'date iso string is missing'],
     },
+    bloodGroup: {
+        type: String,
+        required: [true, 'date iso string is missing'],
+    },
     profession: {
         type: String,
         required: [true, 'profession is missing'],
@@ -51,6 +55,14 @@ const UserModelSchema = mongoose.Schema({
     },
     ownedClothes: {
         type: Array,
+    },
+    tabCount: {
+        type: Number,
+        required: [true, 'tabCount missing'],
+    },
+    currentDayTabCount: {
+        type: Number,
+        required: [true, 'current day count is missing'],
     },
 });
 

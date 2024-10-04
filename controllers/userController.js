@@ -77,6 +77,7 @@ const registerUser = asyncHandler(async (req, res) => {
     profession: req.body.profession,
     email: req.body.email,
     phone: req.body.phone,
+    bloodGroup: req.body.bloodGroup,
     address: req.body.address,
     password: hashedPassword,
     bio: req.body.bio,
@@ -84,6 +85,8 @@ const registerUser = asyncHandler(async (req, res) => {
     medicalDocuments: req.body.medicalDocuments,
     consultedDoctors: req.body.consultedDoctors,
     contacts: req.body.contacts,
+    currentDayTabCount: 0,
+    tabCount: 0
   });
 
   if (user) {
@@ -211,22 +214,26 @@ const updateUser = asyncHandler(async (req, res) => {
 const getUserGeneralDetails
   = asyncHandler(async (req, res) => {
     console.log(req.params.id);
-    const user = await User.findOne({userId: req.params.id});
+    const user = await User.findOne({_id: req.params.id});
+
+    console.log(user);
 
     if (user) {
       res.status(200).json({
-        name: req.body.name,
-        age: req.body.age,
-        dateOfBirth: req.body.dateOfBirth,
-        profession: req.body.profession,
-        email: req.body.email,
-        phone: req.body.phone,
-        address: req.body.address,
-        password: hashedPassword,
-        bio: req.body.bio,
-        imageBinary: userProfileImageBinary,
-        consultedDoctors: req.body.consultedDoctors,
-        contacts: req.body.contacts,
+        name: user.name,
+        age: user.age,
+        dateOfBirth: user.dateOfBirth,
+        profession: user.profession,
+        email: user.email,
+        bloodGroup: user.bloodGroup,
+        phone: user.phone,
+        address: user.address,
+        bio: user.bio,
+        imageBinary: user.imageBinary,
+        consultedDoctors: user.consultedDoctors,
+        contacts: user.contacts,
+        tabCount: user.tabCount,
+        currentDayTabCount: user.currentDayTabCount,
       });
     }
 

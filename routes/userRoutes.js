@@ -14,7 +14,7 @@ const {
 
 const ensureAuthenticated = require("../middleware/authMiddleware");
 
-router.post("/", upload.fields([
+router.post("/register", upload.fields([
     { name: 'medicalDocuments'},
     { name: 'contactProfiles'},
     { name: 'userProfile'}
