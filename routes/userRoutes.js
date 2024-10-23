@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const {signup,login}=require("../Controllers/userController");
-const {otpSend,otpVerify}=require("../Controllers/mailOtpController");
+const {signup,login}=require("../controllers/userController");
+const {otpSend,otpVerify}=require("../controllers/mailOtpController");
 const multer = require('multer');
-const {uploadIdProof}=require("../Controllers/govIDControlller");
+const {uploadIdProof}=require("../controllers/govIDControlller");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
