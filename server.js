@@ -1,19 +1,24 @@
 const express = require("express");
-const connectDb = require("./config/dbConnection");
-const errorHandler = require("./middleware/errorHandler");
-
-connectDb();
+const connectDb = require("./config/connectionDb");
 const app = express();
+require('dotenv').config();
+const cors = require('cors');
+const port = process.env.PORT;
+const bodyParser = require('body-parser');
+const errorHandler=require("./middlewares/errorHandler");
 
-const port = 5000;
+
+app.use(bodyParser.json());
+app.use(cors());
+connectDb();
+
 
 app.use(express.json());
-app.use("/chips", require("./routes/chipRoutes"));
-app.use("/medDetails", require("./routes/medDetailsRoutes"));
-app.use("/doctors", require("./routes/doctorRoutes"));
+app.use(errorHandler);
 app.use("/users", require("./routes/userRoutes"));
-// app.use(errorHandler);
+app.use("/complaints", require("./routes/complaintRoutes"));
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
-  });
+  });  

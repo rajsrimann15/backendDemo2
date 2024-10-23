@@ -1,25 +1,25 @@
 const express = require("express");
 const router = express.Router();
+const {signup,login}=require("../Controllers/userController");
+const {otpSend,otpVerify}=require("../Controllers/mailOtpController");
 const multer = require('multer');
+const {uploadIdProof}=require("../Controllers/govIDControlller");
 
-const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 1024 * 1024 * 100 }});
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
-const {
-    registerUser,
-    loginUser,
-    checkEmail,
-    currentUser,
-    getUserGeneralDetails
-} = require('../controllers/userController');
+//signup
+router.post("/signup",signup);
+router.post("/send-otp",otpSend);
+router.post("/verify-otp",otpVerify);
+router.post("/upload-id-proof", upload.single('idProof'),uploadIdProof);
 
-const ensureAuthenticated = require("../middleware/authMiddleware");
+//login
+router.post("/login",login);
 
-router.post("/register", upload.fields([
-    { name: 'medicalDocuments'},
-    { name: 'contactProfiles'},
-    { name: 'userProfile'}
-]), registerUser).post("/login", loginUser).post("/checkEmail", checkEmail);
 
-router.get("/", ensureAuthenticated, currentUser).get("/:id", ensureAuthenticated, getUserGeneralDetails);
 
-module.exports = router;
+
+module.exports = router;    
+
+
